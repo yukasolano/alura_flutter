@@ -1,5 +1,5 @@
-import 'package:alura_flutter/screens/contact/contact_list.dart';
-import 'package:alura_flutter/screens/transfers/transfer_list.dart';
+import 'package:alura_flutter/screens/feed/feed_list.dart';
+import 'package:alura_flutter/screens/transfers_web/contact_to_transfer_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,16 +16,28 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Row(
-            children: <Widget>[
-              MiniCard(icon: Icons.people, title: 'Contacts', destiny: ContactList()),
-              MiniCard(icon: Icons.monetization_on, title: 'Transfer', destiny: TransferList()),
-            ]
-          )
-
+          Container(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                MiniCard(icon: Icons.monetization_on, title: 'Transfer', onClick: () {
+                  _showPage(context, ContactToTransferList());
+                }),
+                MiniCard(icon: Icons.description, title: 'Feed', onClick: () {
+                  _showPage(context, Feed());
+                }),
+              ]
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  void _showPage(BuildContext context, Widget destiny) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => destiny));
   }
 }
 
@@ -33,9 +45,9 @@ class MiniCard extends StatelessWidget {
 
   final IconData icon;
   final String title;
-  final Widget destiny;
+  final Function onClick;
 
-  const MiniCard({required this.icon, required this.title, required this.destiny});
+  const MiniCard({required this.icon, required this.title, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +56,9 @@ class MiniCard extends StatelessWidget {
       child: Material(
         color: Theme.of(context).primaryColor,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => destiny));
-          },
+          onTap: () => this.onClick(),
           child: Container(
             padding: EdgeInsets.all(8.0),
-            height: 100,
             width: 150,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
