@@ -1,3 +1,4 @@
+import 'package:alura_flutter/components/progress.dart';
 import 'package:alura_flutter/database/dao/contacts_dao.dart';
 import 'package:alura_flutter/models/contact.dart';
 import 'package:alura_flutter/screens/contact/contact_form.dart';
@@ -24,16 +25,7 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
               case ConnectionState.none:
                 break;
               case ConnectionState.waiting:
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      CircularProgressIndicator(),
-                      Text('Loading'),
-                    ],
-                  ),
-                );
+                return Progress();
               case ConnectionState.active:
                 break;
               case ConnectionState.done:

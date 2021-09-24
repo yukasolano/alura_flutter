@@ -5,7 +5,6 @@ import 'http/webclient.dart';
 
 void main() {
   runApp(ByteBankApp());
-  findAll();
 }
 
 class ByteBankApp extends StatelessWidget {
