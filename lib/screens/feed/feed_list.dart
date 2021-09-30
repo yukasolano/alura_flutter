@@ -1,6 +1,6 @@
 import 'package:alura_flutter/components/centered_message.dart';
 import 'package:alura_flutter/components/progress.dart';
-import 'package:alura_flutter/http/webclient.dart';
+import 'package:alura_flutter/http/webclients/transaction_webclient.dart';
 import 'package:alura_flutter/models/transaction.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +10,10 @@ class FeedListState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     //widget._transfers.add(Transaction(100.0, Contact(0, 'Alex', 1000)));
+    final TransactionWebClient webClient = TransactionWebClient();
     return Scaffold(
       body: FutureBuilder<List<Transaction>>(
-          future: findAll(),
+          future: webClient.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -22,9 +23,9 @@ class FeedListState extends State<Feed> {
               case ConnectionState.active:
                 break;
               case ConnectionState.done:
-                if(snapshot.hasData) {
+                if (snapshot.hasData) {
                   final List<Transaction>? transactions = snapshot.data;
-                  if(transactions!.isNotEmpty) {
+                  if (transactions!.isNotEmpty) {
                     return ListView.builder(
                       itemCount: transactions.length,
                       itemBuilder: (context, indice) {
@@ -34,7 +35,8 @@ class FeedListState extends State<Feed> {
                     );
                   }
                 }
-                return CenteredMessage('No transaction found', icon: Icons.warning);
+                return CenteredMessage('No transaction found',
+                    icon: Icons.warning);
             }
             return CenteredMessage('Unkown error');
           }),
@@ -44,8 +46,6 @@ class FeedListState extends State<Feed> {
 }
 
 class Feed extends StatefulWidget {
-  final List<Transaction> _transfers = [];
-
   @override
   State<StatefulWidget> createState() {
     return FeedListState();
