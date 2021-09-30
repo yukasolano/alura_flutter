@@ -2,6 +2,7 @@ import 'package:alura_flutter/components/progress.dart';
 import 'package:alura_flutter/database/dao/contacts_dao.dart';
 import 'package:alura_flutter/models/contact.dart';
 import 'package:alura_flutter/screens/contact/contact_form.dart';
+import 'package:alura_flutter/screens/transfers_web/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 const _appBarTitle = 'Contacts';
@@ -33,7 +34,12 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
                 return ListView.builder(
                   itemCount: contacts.length,
                   itemBuilder: (context, index) {
-                    return ContactItem(contacts[index]);
+                    final Contact contact = contacts[index];
+                    return ContactItem(contacts[index], onClick: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => TransactionForm(contact),
+                      ));
+                    });
                   },
                 );
             }
@@ -54,13 +60,15 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
 
 class ContactItem extends StatelessWidget {
   final Contact _contact;
+  final Function onClick;
 
-  ContactItem(this._contact);
+  ContactItem(this._contact, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () => onClick(),
         title: Text(_contact.name.toString()),
         subtitle: Text(_contact.accountNumber.toString()),
       ),

@@ -1,8 +1,6 @@
 import 'package:alura_flutter/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
-import 'http/webclient.dart';
-
 void main() {
   runApp(ByteBankApp());
 }
