@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import '../webclient.dart';
 
 class TransactionWebClient {
-  final String host = '192.168.0.3:8080';
+  final String host = '192.168.1.53:8080';
   final String endpoint = '/transactions';
 
   Future<List<Transaction>> findAll() async {
@@ -16,11 +16,11 @@ class TransactionWebClient {
     return _toTransactions(response);
   }
 
-  Future<Transaction> save(Transaction transaction) async {
+  Future<Transaction> save(Transaction transaction, String password) async {
     print(transaction.toJson());
     final Response response = await client
         .post(Uri.http(host, endpoint),
-            headers: {'Content-Type': 'application/json', 'password': '1000'},
+            headers: {'Content-Type': 'application/json', 'password': password},
             body: jsonEncode(transaction.toJson()))
         .timeout(Duration(seconds: 5));
     return Transaction.fromJson(jsonDecode(response.body));

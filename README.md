@@ -25,3 +25,13 @@ flutter run //para rodar o app
 
 estilo de reação (react-style) ou declativa (declarative)
 o Flutter cria o layout via código fonte, ou seja, sem a necessidade de um arquivo separado para o layout, como por exemplo, HTML ou XML também conhecido como modo imperativo.
+
+
+Getting start
+start server
+changing ip Preferences -> Network -> Advanced -> TCP/IP -> 
+Get IPv4 value and change host value in TransactionWebClient
+```
+cd bytebank-api-runnable
+java -jar server.jar
+```
