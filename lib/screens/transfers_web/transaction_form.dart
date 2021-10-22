@@ -1,4 +1,5 @@
 import 'package:alura_flutter/components/auth_dialog.dart';
+import 'package:alura_flutter/components/response_dialog.dart';
 import 'package:alura_flutter/http/webclients/transaction_webclient.dart';
 import 'package:alura_flutter/models/contact.dart';
 import 'package:alura_flutter/models/transaction.dart';
@@ -63,17 +64,24 @@ class _TransactionFormState extends State<TransactionForm> {
                     onPressed: () {
                       final double? value =
                           double.tryParse(_valueController.text);
-                      final transactionCreated =
-                          Transaction(value!, widget.contact);
-                      showDialog(context: context, builder: (contextDialog) {
-                        return AuthDialog(onConfirm: (String password) {
-                          webClient.save(transactionCreated, password).then((transaction) {
-                            if (transaction != null) {
-                              Navigator.pop(context);
-                            }
-                          });
-                        });
-                      });
+                      if (value == null) {
+                        showDialog(
+                            context: context,
+                            builder: (contextDialog) {
+                              return FailureDialog(
+                                  'please select a value for the transaction');
+                            });
+                      } else {
+                        final transactionCreated =
+                            Transaction(value, widget.contact);
+                        showDialog(
+                            context: context,
+                            builder: (contextDialog) {
+                              return AuthDialog(onConfirm: (String password) {
+                                _save(transactionCreated, password, context);
+                              });
+                            });
+                      }
                     },
                   ),
                 ),
@@ -83,5 +91,26 @@ class _TransactionFormState extends State<TransactionForm> {
         ),
       ),
     );
+  }
+
+  void _save(Transaction transactionCreated, String password,
+      BuildContext context) async {
+    final Transaction? transaction =
+        await webClient.save(transactionCreated, password).catchError((e) {
+      showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return FailureDialog(e.message);
+          });
+    }, test: (e) => e is Exception);
+
+    if (transaction != null) {
+      await showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return SuccessDialog("successful transaction");
+          });
+      Navigator.pop(context);
+    }
   }
 }
