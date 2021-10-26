@@ -4,4 +4,8 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 
 final Client client =
-    InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+    InterceptedClient.build(
+        interceptors: [LoggingInterceptor()],
+        requestTimeout: Duration(seconds: 5));
+
+const String host = '192.168.1.53:8080';

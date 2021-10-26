@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alura_flutter/components/auth_dialog.dart';
 import 'package:alura_flutter/components/response_dialog.dart';
 import 'package:alura_flutter/http/webclients/transaction_webclient.dart';
@@ -97,13 +99,17 @@ class _TransactionFormState extends State<TransactionForm> {
       BuildContext context) async {
     final Transaction? transaction =
         await webClient.save(transactionCreated, password).catchError((e) {
-      showDialog(
-          context: context,
-          builder: (contextDialog) {
-            return FailureDialog(e.message);
-          });
-    }, test: (e) => e is Exception);
+      _showFailureMessage(context, message: e.message);
+    }, test: (e) => e is HttpException).catchError((e) {
+      _showFailureMessage(context,
+          message: 'timeout submitting the transaction');
+    }, test: (e) => e is TimeoutException).catchError((e) {
+      _showFailureMessage(context);
+    });
+    _showSuccessulMessage(transaction, context);
+  }
 
+  Future<void> _showSuccessulMessage(Transaction? transaction, BuildContext context) async {
     if (transaction != null) {
       await showDialog(
           context: context,
@@ -112,5 +118,13 @@ class _TransactionFormState extends State<TransactionForm> {
           });
       Navigator.pop(context);
     }
+  }
+
+  void _showFailureMessage(BuildContext context, {message = 'unknown error'}) {
+    showDialog(
+        context: context,
+        builder: (contextDialog) {
+          return FailureDialog(message);
+        });
   }
 }
