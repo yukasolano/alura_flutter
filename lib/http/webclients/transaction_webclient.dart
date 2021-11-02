@@ -15,7 +15,8 @@ class TransactionWebClient {
   }
 
   Future<Transaction?> save(Transaction transaction, String password) async {
-    print(transaction.toJson());
+    await Future.delayed(Duration(seconds: 2));
+
     final Response response = await client
         .post(Uri.http(host, endpoint),
             headers: {'Content-Type': 'application/json', 'password': password},
@@ -39,7 +40,8 @@ class TransactionWebClient {
 
   static final Map<int, String> _statusCodeResponses = {
     400: "error submitting transaction",
-    401: "authentication error"
+    401: "authentication error",
+    409: 'transaction already exists'
   };
 
   List<Transaction> _toTransactions(Response response) {
