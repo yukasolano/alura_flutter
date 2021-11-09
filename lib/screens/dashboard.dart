@@ -8,29 +8,38 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Dashboard')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset('images/bytebank_logo.png'),
-          ),
-          Container(
-            height: 120,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                MiniCard(icon: Icons.monetization_on, title: 'Transfer', onClick: () {
-                  _showPage(context, ContactToTransferList());
-                }),
-                MiniCard(icon: Icons.description, title: 'Feed', onClick: () {
-                  _showPage(context, Feed());
-                }),
-              ]
+      body: LayoutBuilder(
+        builder: (context, contraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: contraints.maxHeight
             ),
-          ),
-        ],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('images/bytebank_logo.png'),
+                ),
+                Container(
+                  height: 120,
+                  child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        MiniCard(icon: Icons.monetization_on, title: 'Transfer', onClick: () {
+                          _showPage(context, ContactToTransferList());
+                        }),
+                        MiniCard(icon: Icons.description, title: 'Feed', onClick: () {
+                          _showPage(context, Feed());
+                        }),
+                      ]
+                  ),
+                ),
+              ],
+            ),
+          )
+        )
       ),
     );
   }
