@@ -6,19 +6,23 @@ import 'package:flutter/material.dart';
 const _appBarTitle = 'Contacts';
 
 class ContactList extends StatefulWidget {
+
+  final ContactDao contactDao;
+
+  const ContactList({required this.contactDao}) ;
+
   @override
   _ContactListState createState() => _ContactListState();
 }
 
 class _ContactListState extends State<ContactList> {
-  final ContactDao _dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Contact>>(
           initialData: [],
-          future: _dao.findAll(),
+          future: widget.contactDao.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -52,7 +56,7 @@ class _ContactListState extends State<ContactList> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ContactForm();
+            return ContactForm(contactDao: widget.contactDao);
           })).then((value) => setState(() {}));
         },
       ),

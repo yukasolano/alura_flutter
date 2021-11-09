@@ -8,19 +8,26 @@ import 'package:flutter/material.dart';
 const _appBarTitle = 'Contacts';
 
 class ContactToTransferList extends StatefulWidget {
+
+  final ContactDao contactDao;
+
+  const ContactToTransferList({required this.contactDao});
+
   @override
-  _ContactToTransferListState createState() => _ContactToTransferListState();
+  _ContactToTransferListState createState() => _ContactToTransferListState(contactDao: contactDao);
 }
 
 class _ContactToTransferListState extends State<ContactToTransferList> {
-  final ContactDao _dao = ContactDao();
+  final ContactDao contactDao;
+
+  _ContactToTransferListState({required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Contact>>(
           initialData: [],
-          future: _dao.findAll(),
+          future: contactDao.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -50,7 +57,7 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ContactForm();
+            return ContactForm(contactDao: contactDao);
           })).then((value) => setState(() {}));
         },
       ),

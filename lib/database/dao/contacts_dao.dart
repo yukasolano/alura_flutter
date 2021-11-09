@@ -13,7 +13,7 @@ class ContactDao {
       '$_name TEXT,'
       '$_accountNumber INTEGER)';
 
-  Future<int> save(Contact contato) async {
+  Future<int>? save(Contact contato) async {
     final Database db = await getDatabase();
     final Map<String, dynamic> contactMap = Map();
     contactMap[_name] = contato.name;
@@ -21,7 +21,7 @@ class ContactDao {
     return db.insert(_table, contactMap);
   }
 
-  Future<List<Contact>> findAll() async {
+  Future<List<Contact>>? findAll() async {
     final Database db = await getDatabase();
     final List<Contact> contacts = [];
     for (Map<String, dynamic> map in await db.query(_table)) {

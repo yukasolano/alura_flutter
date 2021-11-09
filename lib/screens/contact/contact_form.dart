@@ -10,6 +10,11 @@ const _accountNumberTip = '0000';
 const _createButton = 'Create';
 
 class ContactForm extends StatefulWidget {
+
+  final ContactDao contactDao;
+
+  const ContactForm({required this.contactDao});
+
   @override
   State<StatefulWidget> createState() {
     return ContactFormState();
@@ -20,15 +25,19 @@ class ContactFormState extends State<ContactForm> {
   final TextEditingController _accountNumberController =
       TextEditingController();
   final TextEditingController _valueController = TextEditingController();
-  final ContactDao _dao = ContactDao();
 
   void _createContact(BuildContext context) {
     final int? accountNumber = int.tryParse(_accountNumberController.text);
     final String? name = _valueController.text;
     if (accountNumber != null && name != null) {
       final createdContact = Contact(0, name, accountNumber);
-      _dao.save(createdContact).then((id) => Navigator.pop(context));
+      _save(createdContact, context);
     }
+  }
+
+  void _save(Contact createdContact, BuildContext context) async {
+    await widget.contactDao.save(createdContact);
+    Navigator.pop(context);
   }
 
   @override

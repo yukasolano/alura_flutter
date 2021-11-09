@@ -1,9 +1,15 @@
+import 'package:alura_flutter/database/dao/contacts_dao.dart';
 import 'package:alura_flutter/screens/feed/feed_list.dart';
 import 'package:alura_flutter/screens/transfers_web/contact_to_transfer_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
+
+  final ContactDao contactDao;
+
+  const Dashboard({required this.contactDao}) ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +34,7 @@ class Dashboard extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         MiniCard(icon: Icons.monetization_on, title: 'Transfer', onClick: () {
-                          _showPage(context, ContactToTransferList());
+                          _showPage(context, ContactToTransferList(contactDao: contactDao));
                         }),
                         MiniCard(icon: Icons.description, title: 'Feed', onClick: () {
                           _showPage(context, Feed());
