@@ -9,15 +9,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../helpers/matchers.dart';
 import '../helpers/mocks.dart';
 import 'actions.dart';
 
-@GenerateMocks([MockTransactionWebClient])
 void main() {
+
+  MockContactDao mockContactDao = MockContactDao();
+  MockTransactionWebClient mockWebClient = MockTransactionWebClient();
+
+  setUp(() async {
+    mockContactDao = MockContactDao();
+    mockWebClient = MockTransactionWebClient();
+  });
+
   testWidgets('Should save a contact', (tester) async {
-    final mockContactDao = MockContactDao();
-    final mockWebClient = MockTransactionWebClient();
+
     await tester.pumpWidget(ByteBankApp(
       contactDao: mockContactDao,
       transactionWebClient: mockWebClient,
@@ -27,37 +33,20 @@ void main() {
     expect(dashboard, findsOneWidget);
 
     await clickOnTheTransferMinicard(tester);
-    await tester.pumpAndSettle();
 
     verify(mockContactDao.findAll()).called(1);
 
     final contactList = find.byType(ContactToTransferList);
     expect(contactList, findsOneWidget);
 
-    final fabnewContact = find.widgetWithIcon(FloatingActionButton, Icons.add);
-    expect(fabnewContact, findsOneWidget);
-
-    await tester.tap(fabnewContact);
-    await tester.pumpAndSettle();
+    await clickOnTheFabNew(tester);
 
     final contactForm = find.byType(ContactForm);
     expect(contactForm, findsOneWidget);
 
-    final nameTextField =
-        find.byWidgetPredicate((widget) => findLabel(widget, 'Full name'));
-    expect(nameTextField, findsOneWidget);
-    await tester.enterText(nameTextField, 'Alex');
-
-    final accountNumberTextField =
-        find.byWidgetPredicate((widget) => findLabel(widget, 'Account number'));
-    expect(accountNumberTextField, findsOneWidget);
-    await tester.enterText(accountNumberTextField, '1000');
-
-    final createButton = find.widgetWithText(ElevatedButton, 'Create');
-    expect(createButton, findsOneWidget);
-
-    await tester.tap(createButton);
-    await tester.pumpAndSettle();
+    await fillTextWithTextLabel(tester, text: 'Alex', labelText: 'Full name');
+    await fillTextWithTextLabel(tester, text: '1000', labelText: 'Account number');
+    await clickOnTheButtonWithText(tester, 'Create');
 
     verify(mockContactDao.save(new Contact(0, 'Alex', 1000))).called(1);
 
@@ -67,4 +56,7 @@ void main() {
     
   });
 }
+
+
+
 

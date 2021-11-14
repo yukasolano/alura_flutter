@@ -65,16 +65,16 @@ class _ContactListState extends State<ContactList> {
 }
 
 class ContactItem extends StatelessWidget {
-  final Contact _contact;
+  final Contact contact;
 
-  ContactItem(this._contact);
+  ContactItem(this.contact);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(_contact.name.toString()),
-        subtitle: Text(_contact.accountNumber.toString()),
+        title: Text(contact.name.toString()),
+        subtitle: Text(contact.accountNumber.toString()),
       ),
     );
   }
