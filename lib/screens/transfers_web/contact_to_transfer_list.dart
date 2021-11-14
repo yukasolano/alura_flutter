@@ -1,33 +1,27 @@
 import 'package:alura_flutter/components/progress.dart';
-import 'package:alura_flutter/database/dao/contacts_dao.dart';
 import 'package:alura_flutter/models/contact.dart';
 import 'package:alura_flutter/screens/contact/contact_form.dart';
 import 'package:alura_flutter/screens/transfers_web/transaction_form.dart';
+import 'package:alura_flutter/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 
 const _appBarTitle = 'Contacts';
 
 class ContactToTransferList extends StatefulWidget {
 
-  final ContactDao contactDao;
-
-  const ContactToTransferList({required this.contactDao});
-
   @override
-  _ContactToTransferListState createState() => _ContactToTransferListState(contactDao: contactDao);
+  _ContactToTransferListState createState() => _ContactToTransferListState();
 }
 
 class _ContactToTransferListState extends State<ContactToTransferList> {
-  final ContactDao contactDao;
-
-  _ContactToTransferListState({required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       body: FutureBuilder<List<Contact>>(
           initialData: [],
-          future: contactDao.findAll(),
+          future: dependencies!.contactDao.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -57,7 +51,7 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ContactForm(contactDao: contactDao);
+            return ContactForm();
           })).then((value) => setState(() {}));
         },
       ),

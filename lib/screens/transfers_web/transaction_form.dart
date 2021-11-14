@@ -6,6 +6,7 @@ import 'package:alura_flutter/components/response_dialog.dart';
 import 'package:alura_flutter/http/webclients/transaction_webclient.dart';
 import 'package:alura_flutter/models/contact.dart';
 import 'package:alura_flutter/models/transaction.dart';
+import 'package:alura_flutter/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -20,7 +21,6 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
-  final TransactionWebClient webClient = TransactionWebClient();
   bool _sending = false;
   final String transactionId = Uuid().v4();
 
@@ -111,8 +111,9 @@ class _TransactionFormState extends State<TransactionForm> {
     setState(() {
       _sending = true;
     });
+    final dependencies = AppDependencies.of(context);
     final Transaction? transaction =
-        await webClient.save(transactionCreated, password).catchError((e) {
+        await dependencies!.transactionWebClient.save(transactionCreated, password)!.catchError((e) {
       _showFailureMessage(context, message: e.message);
     }, test: (e) => e is HttpException).catchError((e) {
       _showFailureMessage(context,

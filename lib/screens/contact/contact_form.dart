@@ -1,6 +1,7 @@
 import 'package:alura_flutter/components/editor.dart';
 import 'package:alura_flutter/database/dao/contacts_dao.dart';
 import 'package:alura_flutter/models/contact.dart';
+import 'package:alura_flutter/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 
 const _appBarTitle = 'New contact';
@@ -11,10 +12,6 @@ const _createButton = 'Create';
 
 class ContactForm extends StatefulWidget {
 
-  final ContactDao contactDao;
-
-  const ContactForm({required this.contactDao});
-
   @override
   State<StatefulWidget> createState() {
     return ContactFormState();
@@ -22,6 +19,7 @@ class ContactForm extends StatefulWidget {
 }
 
 class ContactFormState extends State<ContactForm> {
+
   final TextEditingController _accountNumberController =
       TextEditingController();
   final TextEditingController _valueController = TextEditingController();
@@ -36,7 +34,8 @@ class ContactFormState extends State<ContactForm> {
   }
 
   void _save(Contact createdContact, BuildContext context) async {
-    await widget.contactDao.save(createdContact);
+    final dependencies = AppDependencies.of(context);
+    await dependencies!.contactDao.save(createdContact);
     Navigator.pop(context);
   }
 

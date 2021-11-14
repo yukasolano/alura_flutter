@@ -7,3 +7,11 @@ bool findMiniCard(Widget widget, String title, IconData icon) {
   }
   return false;
 }
+
+
+bool findLabel(Widget widget, String label) {
+  if (widget is TextField) {
+    return widget.decoration?.labelText == label;
+  }
+  return false;
+}

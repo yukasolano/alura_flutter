@@ -1,3 +1,4 @@
+import 'package:alura_flutter/components/auth_dialog.dart';
 import 'package:alura_flutter/main.dart';
 import 'package:alura_flutter/models/contact.dart';
 import 'package:alura_flutter/screens/contact/contact_form.dart';
@@ -5,15 +6,22 @@ import 'package:alura_flutter/screens/dashboard.dart';
 import 'package:alura_flutter/screens/transfers_web/contact_to_transfer_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../helpers/matchers.dart';
 import '../helpers/mocks.dart';
 import 'actions.dart';
 
+@GenerateMocks([MockTransactionWebClient])
 void main() {
   testWidgets('Should save a contact', (tester) async {
-    final mock = MockContactDao();
-    await tester.pumpWidget(ByteBankApp(contactDao: mock));
+    final mockContactDao = MockContactDao();
+    final mockWebClient = MockTransactionWebClient();
+    await tester.pumpWidget(ByteBankApp(
+      contactDao: mockContactDao,
+      transactionWebClient: mockWebClient,
+    ));
 
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
@@ -21,7 +29,7 @@ void main() {
     await clickOnTheTransferMinicard(tester);
     await tester.pumpAndSettle();
 
-    verify(mock.findAll()).called(1);
+    verify(mockContactDao.findAll()).called(1);
 
     final contactList = find.byType(ContactToTransferList);
     expect(contactList, findsOneWidget);
@@ -36,12 +44,12 @@ void main() {
     expect(contactForm, findsOneWidget);
 
     final nameTextField =
-        find.byWidgetPredicate((widget) => _isLabel(widget, 'Full name'));
+        find.byWidgetPredicate((widget) => findLabel(widget, 'Full name'));
     expect(nameTextField, findsOneWidget);
     await tester.enterText(nameTextField, 'Alex');
 
     final accountNumberTextField =
-        find.byWidgetPredicate((widget) => _isLabel(widget, 'Account number'));
+        find.byWidgetPredicate((widget) => findLabel(widget, 'Account number'));
     expect(accountNumberTextField, findsOneWidget);
     await tester.enterText(accountNumberTextField, '1000');
 
@@ -51,17 +59,12 @@ void main() {
     await tester.tap(createButton);
     await tester.pumpAndSettle();
 
-    verify(mock.save(new Contact(0, 'Alex', 1000))).called(1);
+    verify(mockContactDao.save(new Contact(0, 'Alex', 1000))).called(1);
 
-    verify(mock.findAll()).called(1);
+    verify(mockContactDao.findAll()).called(1);
     final contactListBack = find.byType(ContactToTransferList);
     expect(contactListBack, findsOneWidget);
+    
   });
 }
 
-bool _isLabel(Widget widget, String label) {
-  if (widget is TextField) {
-    return widget.decoration?.labelText == label;
-  }
-  return false;
-}

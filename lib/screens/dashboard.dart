@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
 
-  final ContactDao contactDao;
-
-  const Dashboard({required this.contactDao}) ;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +30,7 @@ class Dashboard extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         MiniCard(icon: Icons.monetization_on, title: 'Transfer', onClick: () {
-                          _showPage(context, ContactToTransferList(contactDao: contactDao));
+                          _showPage(context, ContactToTransferList());
                         }),
                         MiniCard(icon: Icons.description, title: 'Feed', onClick: () {
                           _showPage(context, Feed());

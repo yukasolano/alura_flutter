@@ -2,6 +2,7 @@ import 'package:alura_flutter/components/centered_message.dart';
 import 'package:alura_flutter/components/progress.dart';
 import 'package:alura_flutter/http/webclients/transaction_webclient.dart';
 import 'package:alura_flutter/models/transaction.dart';
+import 'package:alura_flutter/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 
 const _tituloAppBar = 'Transfer Feed';
@@ -9,11 +10,10 @@ const _tituloAppBar = 'Transfer Feed';
 class FeedListState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
-    //widget._transfers.add(Transaction(100.0, Contact(0, 'Alex', 1000)));
-    final TransactionWebClient webClient = TransactionWebClient();
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       body: FutureBuilder<List<Transaction>>(
-          future: webClient.findAll(),
+          future: dependencies!.transactionWebClient.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:

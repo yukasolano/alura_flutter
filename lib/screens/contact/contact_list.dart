@@ -56,7 +56,7 @@ class _ContactListState extends State<ContactList> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ContactForm(contactDao: widget.contactDao);
+            return ContactForm();
           })).then((value) => setState(() {}));
         },
       ),
