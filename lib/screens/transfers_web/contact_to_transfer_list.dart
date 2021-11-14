@@ -66,18 +66,18 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
 }
 
 class ContactItem extends StatelessWidget {
-  final Contact _contact;
+  final Contact contact;
   final Function onClick;
 
-  ContactItem(this._contact, {required this.onClick});
+  ContactItem(this.contact, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         onTap: () => onClick(),
-        title: Text(_contact.name.toString()),
-        subtitle: Text(_contact.accountNumber.toString()),
+        title: Text(contact.name.toString()),
+        subtitle: Text(contact.accountNumber.toString()),
       ),
     );
   }
