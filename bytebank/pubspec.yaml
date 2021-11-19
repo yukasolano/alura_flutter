@@ -34,6 +34,7 @@ dependencies:
   http_interceptor:
   uuid:
   mockito:
+  provider:
 
 dev_dependencies:
   flutter_test:

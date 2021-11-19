@@ -4,13 +4,13 @@ class Editor extends StatelessWidget {
   final TextEditingController controlador;
   final String rotulo;
   final String dica;
-  final IconData icone;
+  final IconData? icone;
 
   Editor({
     required this.controlador,
     required this.rotulo,
     required this.dica,
-    required this.icone,
+    this.icone,
   });
 
   @override
