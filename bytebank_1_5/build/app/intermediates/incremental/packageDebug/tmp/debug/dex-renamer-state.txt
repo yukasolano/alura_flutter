@@ -1,4 +1,0 @@
-#Sun Nov 14 18:49:08 BRT 2021
-base.0=/Users/yuka.kyushima/dev/pessoal/alura_flutter/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
