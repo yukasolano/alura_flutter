@@ -1,4 +1,4 @@
-import 'package:alura_flutter/models/saldo.dart';
+import 'package:alura_flutter/screens/transferencia/deposito/formulario_deposito.dart';
 import 'package:flutter/material.dart';
 
 import 'saldo_card.dart';
@@ -12,6 +12,18 @@ class Dashboard extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Bytebank'),
         ),
-        body: Align(alignment: Alignment.topCenter, child: SaldoCard()));
+        body: ListView(
+          children: <Widget>[
+            Align(alignment: Alignment.topCenter, child: SaldoCard()),
+            ElevatedButton(
+              child: Text('Fazer depósito'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return FormularioDeposito();
+                }));
+              },
+            )
+          ],
+        ));
   }
 }
