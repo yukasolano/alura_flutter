@@ -1,9 +1,10 @@
+import 'package:alura_flutter/models/Transferencias.dart';
 import 'package:alura_flutter/models/saldo.dart';
 import 'package:alura_flutter/screens/transferencia/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'models/transferencias.dart';
+
 
 void main() => runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => Saldo(0)),
