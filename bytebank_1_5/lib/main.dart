@@ -29,7 +29,7 @@ class ByteBankApp extends StatelessWidget {
       transactionWebClient: transactionWebClient,
       child: MaterialApp(
         theme: bytebankTheme,
-        home: NameContainer()//Dashboard(),
+        home: DashboardContainer(),
       ),
     );
   }
