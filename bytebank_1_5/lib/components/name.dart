@@ -1,17 +1,6 @@
+import 'package:alura_flutter/models/name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-class NameCubit extends Cubit<String> {
-  NameCubit(String name) : super(name);
-
-  change(String name) => emit(name);
-
-  @override
-  void onChange(Change<String> change) {
-    super.onChange(change);
-    print(change);
-  }
-}
 
 class NameContainer extends StatelessWidget {
   @override

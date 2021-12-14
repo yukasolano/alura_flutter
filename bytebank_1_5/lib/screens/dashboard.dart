@@ -1,4 +1,5 @@
 import 'package:alura_flutter/components/name.dart';
+import 'package:alura_flutter/models/name.dart';
 import 'package:alura_flutter/screens/feed/feed_list.dart';
 import 'package:alura_flutter/screens/transfers_web/contact_to_transfer_list.dart';
 import 'package:flutter/cupertino.dart';
