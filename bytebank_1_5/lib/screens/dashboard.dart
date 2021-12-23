@@ -1,3 +1,4 @@
+import 'package:alura_flutter/components/bloc_container.dart';
 import 'package:alura_flutter/components/name.dart';
 import 'package:alura_flutter/models/name.dart';
 import 'package:alura_flutter/screens/feed/feed_list.dart';
@@ -6,11 +7,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DashboardContainer extends StatelessWidget {
+class DashboardContainer extends BlocContainer {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => NameCubit("Yuka"), child: DashboardView());
+        create: (_) => NameCubit("Yuka"),
+        child: DashboardView()
+    );
   }
 }
 
@@ -44,7 +47,7 @@ class DashboardView extends StatelessWidget {
                           icon: Icons.monetization_on,
                           title: 'Transfer',
                           onClick: () {
-                            _showPage(context, ContactToTransferList());
+                            DashboardContainer().push(context, ContactToTransferListContainer());
                           }),
                       MiniCard(
                           icon: Icons.description,

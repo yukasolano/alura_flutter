@@ -1,8 +1,9 @@
+import 'package:alura_flutter/components/bloc_container.dart';
 import 'package:alura_flutter/models/name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NameContainer extends StatelessWidget {
+class NameContainer extends BlocContainer {
   @override
   Widget build(BuildContext context) {
    // return BlocProvider(create: (_) => NameCubit("Yuka"), child: NameView());

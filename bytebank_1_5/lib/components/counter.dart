@@ -1,3 +1,4 @@
+import 'package:alura_flutter/components/bloc_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +16,7 @@ class CounterCubit extends Cubit<int> {
   }
 }
 
-class CounterContainer extends StatelessWidget {
+class CounterContainer extends BlocContainer {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
