@@ -92,9 +92,7 @@ class _ContactToTransferListState extends State<ContactToTransferList> {
             itemBuilder: (context, index) {
               final Contact contact = contacts[index];
               return ContactItem(contacts[index], onClick: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => TransactionForm(contact),
-                ));
+                ContactToTransferListContainer().push(context, TransactionFormContainer(contact));
               });
             },
           );
