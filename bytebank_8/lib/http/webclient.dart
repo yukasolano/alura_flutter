@@ -9,5 +9,3 @@ final Client client = HttpClientWithInterceptor.build(
 );
 
 const String baseUrl = 'http://192.168.1.53:8080/transactions';
-
-
