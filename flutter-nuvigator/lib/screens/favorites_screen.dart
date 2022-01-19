@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuvigator/next.dart';
 import 'package:proj/components/orgs_drawer.dart';
 import 'package:proj/components/orgs_stores_card.dart';
 import 'package:proj/core/app_colors.dart';
@@ -27,8 +28,7 @@ class FavoritesScreen extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.darkGrey
-                    ),
+                        color: AppColors.darkGrey),
                   ),
                   IconButton(
                     color: Colors.transparent,
@@ -47,7 +47,6 @@ class FavoritesScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
-
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -66,9 +65,9 @@ class FavoritesScreen extends StatelessWidget {
                   },
                 ),
               )
-              ],
-            ),
+            ],
           ),
+        ),
       ),
     );
   }
@@ -77,13 +76,14 @@ class FavoritesScreen extends StatelessWidget {
     List<Widget> children = [];
     final data = await Data.getJson();
     final producers = data["producers"];
+    final nuvigator = Nuvigator.of(context);
 
-    for(final producer in producers.keys) {
-
+    for (final producer in producers.keys) {
       final prod = Producer.fromJson(producers[producer]);
 
       children.add(OrgsStoresCard(
-        action: () => Navigator.pushNamed(context, 'producer-details', arguments: prod),
+        action: () =>
+            nuvigator.open('producer-details', parameters: {'producer': prod}),
         img: prod.logo,
         distance: prod.distance,
         title: prod.name,
