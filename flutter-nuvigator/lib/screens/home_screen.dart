@@ -9,7 +9,6 @@ import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
 import 'package:proj/models/producer_model.dart';
 import 'package:proj/repository/data.dart';
-import 'package:proj/screens/producer_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -140,10 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final prod = Producer.fromJson(producers[producer]);
 
       children.add(OrgsStoresCard(
-        action: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ProducerDetailsScreen(producer: prod)),
-        ),
+        action: () => Navigator.pushNamed(context, 'producer-details', arguments: prod),
         img: prod.logo,
         distance: prod.distance,
         title: prod.name,
