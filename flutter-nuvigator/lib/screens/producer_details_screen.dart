@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nuvigator/next.dart';
 import 'package:proj/components/orgs_packages_card.dart';
 import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
@@ -8,8 +7,9 @@ import 'package:proj/models/producer_model.dart';
 
 class ProducerDetailsScreen extends StatelessWidget {
   final Producer producer;
+  final onPackageDetailsClick;
 
-  ProducerDetailsScreen({@required this.producer});
+  ProducerDetailsScreen({@required this.producer, this.onPackageDetailsClick});
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +92,12 @@ class ProducerDetailsScreen extends StatelessWidget {
 
   List _generatePackageList(BuildContext context, List packages) {
     List<Widget> children = [];
-    final nuvigator = Nuvigator.of(context);
     for (final package in packages) {
       final pack = Package.fromJson(package);
 
       children.add(InkWell(
-        onTap: () => nuvigator.open('package-details',
-            parameters: {'package': pack, 'producer': producer}),
+        onTap: () =>
+            onPackageDetailsClick({'package': pack, 'producer': producer}),
         child: OrgsPackagesCard(
           title: pack.title,
           price: pack.price,
