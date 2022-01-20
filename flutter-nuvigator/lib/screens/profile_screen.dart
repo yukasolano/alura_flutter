@@ -6,6 +6,9 @@ import 'package:proj/core/app_images.dart';
 
 class ProfileScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final onClose;
+
+  ProfileScreen({this.onClose});
 
   @override
   Widget build(BuildContext context) {
@@ -18,74 +21,69 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Perfil',
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGrey
-                      ),
-                    ),
-                    IconButton(
-                      color: Colors.transparent,
-                      icon: Icon(Icons.menu, color: AppColors.green), // set your color here
-                      onPressed: () {
-                        _scaffoldKey.currentState.openDrawer();
-                      }
-                    ),
-                  ]
-              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  'Perfil',
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.darkGrey),
+                ),
+                IconButton(
+                    color: Colors.transparent,
+                    icon: Icon(Icons.menu, color: AppColors.green),
+                    // set your color here
+                    onPressed: () {
+                      onClose();
+                      _scaffoldKey.currentState.openDrawer();
+                    }),
+              ]),
               SizedBox(height: 40),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.asset(
-                                AppImages.person,
-                                width: 80,
-                              ),
+                  Row(children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                              AppImages.person,
+                              width: 80,
                             ),
-                            Positioned(
-                              bottom: 4,
-                              right: 10,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.green,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Icon(
-                                  Icons.enhance_photo_translate,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                width: 30,
-                                height: 30,
+                          ),
+                          Positioned(
+                            bottom: 4,
+                            right: 10,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.green,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                            )
-                          ],
-                        ),
+                              child: Icon(
+                                Icons.enhance_photo_translate,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              width: 30,
+                              height: 30,
+                            ),
+                          )
+                        ],
                       ),
-                      SizedBox(width: 15),
-                      Text(
-                        'Leonardo Alurano',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
+                    ),
+                    SizedBox(width: 15),
+                    Text(
+                      'Leonardo Alurano',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                       ),
-                    ]
-                  ),
+                    ),
+                  ]),
                   SizedBox(height: 30),
                   Text(
                     'Informações do perfil',
@@ -120,7 +118,9 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
             ],
           ),
         ),
